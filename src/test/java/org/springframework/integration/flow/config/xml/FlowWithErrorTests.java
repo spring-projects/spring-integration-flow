@@ -21,13 +21,13 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.integration.Message;
-import org.springframework.integration.MessageChannel;
-import org.springframework.integration.MessagingException;
-import org.springframework.integration.core.MessageHandler;
-import org.springframework.integration.core.PollableChannel;
-import org.springframework.integration.core.SubscribableChannel;
-import org.springframework.integration.message.GenericMessage;
+import org.springframework.messaging.Message;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.MessagingException;
+import org.springframework.messaging.MessageHandler;
+import org.springframework.messaging.PollableChannel;
+import org.springframework.messaging.SubscribableChannel;
+import org.springframework.messaging.support.GenericMessage;
 
 /**
  * 
@@ -93,8 +93,8 @@ public class FlowWithErrorTests {
 		 * (non-Javadoc)
 		 * 
 		 * @see
-		 * org.springframework.integration.core.MessageHandler#handleMessage
-		 * (org.springframework.integration.Message)
+		 * org.springframework.messaging.MessageHandler#handleMessage
+		 * (org.springframework.messaging.Message)
 		 */
 		public void handleMessage(Message<?> message) throws MessagingException {
 			this.gotResponse = true;

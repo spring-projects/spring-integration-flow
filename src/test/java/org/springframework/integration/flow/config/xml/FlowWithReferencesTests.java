@@ -18,7 +18,7 @@ package org.springframework.integration.flow.config.xml;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.runner.RunWith;
-import org.springframework.integration.Message;
+import org.springframework.messaging.Message;
 import org.springframework.integration.test.support.MessageValidator;
 import org.springframework.integration.test.support.RequestResponseScenario;
 import org.springframework.integration.test.support.SingleRequestResponseScenarioTests;

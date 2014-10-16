@@ -4,11 +4,11 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.springframework.integration</groupId>
   <artifactId>spring-integration-flow</artifactId>
-  <version>1.0.0.BUILD-SNAPSHOT</version>
+  <version>4.0.0.BUILD-SNAPSHOT</version>
   <name>Spring Integration Flow Support</name>
   <properties>
-    <spring.version>3.2.2.RELEASE</spring.version>
-    <spring.integration.version>3.0.0.BUILD-SNAPSHOT</spring.integration.version>
+    <spring.version>4.0.7.RELEASE</spring.version>
+    <spring.integration.version>4.0.4.RELEASE</spring.integration.version>
     <project.build.sourceEncoding>UTF8</project.build.sourceEncoding>
   </properties>
   <licenses>

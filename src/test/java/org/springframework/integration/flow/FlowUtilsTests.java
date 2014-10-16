@@ -4,14 +4,14 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
 
 import org.junit.Test;
-import org.springframework.integration.Message;
+import org.springframework.messaging.Message;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.channel.PublishSubscribeChannel;
 import org.springframework.integration.channel.QueueChannel;
-import org.springframework.integration.core.PollableChannel;
-import org.springframework.integration.core.SubscribableChannel;
+import org.springframework.messaging.PollableChannel;
+import org.springframework.messaging.SubscribableChannel;
 import org.springframework.integration.flow.config.FlowUtils;
-import org.springframework.integration.message.GenericMessage;
+import org.springframework.messaging.support.GenericMessage;
 /**
  * 
  * @author David Turanski

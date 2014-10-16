@@ -12,7 +12,7 @@
  */
 package org.springframework.integration.flow.Transaction;
 
-import org.springframework.integration.Message;
+import org.springframework.messaging.Message;
 import org.springframework.integration.gateway.RequestReplyExchanger;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +28,7 @@ public class TransactionalServiceActivator implements RequestReplyExchanger {
 		this.gateway = gateway;
 	}
 	/* (non-Javadoc)
-	 * @see org.springframework.integration.gateway.RequestReplyExchanger#exchange(org.springframework.integration.Message)
+	 * @see org.springframework.integration.gateway.RequestReplyExchanger#exchange(org.springframework.messaging.Message)
 	 */
 	public Message<?> exchange(Message<?> request) {
 		return gateway.exchange(request);

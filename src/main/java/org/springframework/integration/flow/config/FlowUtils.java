@@ -26,8 +26,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.integration.MessageChannel;
-import org.springframework.integration.core.SubscribableChannel;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.SubscribableChannel;
 import org.springframework.integration.handler.BridgeHandler;
 import org.springframework.util.ResourceUtils;
 

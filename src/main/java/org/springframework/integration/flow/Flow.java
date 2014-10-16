@@ -9,6 +9,7 @@ import java.util.Set;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanNameAware;
 import org.springframework.beans.factory.InitializingBean;
@@ -17,13 +18,13 @@ import org.springframework.beans.factory.support.BeanDefinitionValidationExcepti
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.integration.MessageChannel;
 import org.springframework.integration.channel.AbstractMessageChannel;
-import org.springframework.integration.core.SubscribableChannel;
 import org.springframework.integration.flow.config.FlowUtils;
 import org.springframework.integration.flow.interceptor.FlowInterceptor;
 import org.springframework.integration.support.channel.BeanFactoryChannelResolver;
-import org.springframework.integration.support.channel.ChannelResolver;
+import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.SubscribableChannel;
+import org.springframework.messaging.core.DestinationResolver;
 import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 
@@ -36,16 +37,16 @@ import org.springframework.util.StringUtils;
  * bean definitions used by the flow. In addition, beans defined in the parent
  * application context may be referenced or overridden in the flow application
  * context.
- * 
+ *
  * By convention the flow configuration resource locations are
  * classpath:META-INF/spring/integration/flows/[flow-id]/*.xml
- * 
+ *
  * The flow-id defaults to the bean name if not set
- * 
+ *
  * @author David Turanski
- * 
+ *
  */
-public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, ApplicationContextAware {
+public class Flow implements InitializingBean, BeanNameAware, DestinationResolver, ApplicationContextAware {
 
 	private static Log logger = LogFactory.getLog(Flow.class);
 
@@ -65,7 +66,7 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 
 	private volatile String flowId;
 
-	private volatile ChannelResolver flowChannelResolver;
+	private volatile BeanFactoryChannelResolver flowChannelResolver;
 
 	private volatile SubscribableChannel flowOutputChannel;
 
@@ -79,7 +80,7 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 	}
 
 	/**
-	 * 
+	 *
 	 * @param flowProperties properties for this flow instance
 	 * @param configLocations Spring configuration resource locations containing
 	 * bean definitions included in the flow application context
@@ -90,7 +91,7 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 	}
 
 	/**
-	 * 
+	 *
 	 * @param configLocations Spring configuration resource locations containing
 	 * bean definitions included in the flow application context
 	 */
@@ -98,6 +99,7 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 		this.configLocations = configLocations;
 	}
 
+	@Override
 	public void afterPropertiesSet() {
 
 		if (this.flowId == null) {
@@ -153,6 +155,7 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 		return this.flowConfiguration;
 	}
 
+	@Override
 	public void setBeanName(String name) {
 		this.beanName = name;
 
@@ -170,7 +173,7 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 	}
 
 	/**
-	 * 
+	 *
 	 * @param referencedBeanLocations Additional resource locations containing
 	 * referenced bean definitions
 	 */
@@ -179,7 +182,7 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 	}
 
 	/**
-	 * 
+	 *
 	 * @param flowProperties properties referenced in the flow definition
 	 * property placeholders
 	 */
@@ -192,7 +195,7 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 	}
 
 	/**
-	 * 
+	 *
 	 * @param help if true write the flow documentation to stdout The default
 	 * document location is
 	 * "classpath:META-INF/spring/integration/flows/[flow-id]/flow.doc"
@@ -219,8 +222,9 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 		this.flowOutputChannel = flowOutputChannel;
 	}
 
-	public MessageChannel resolveChannelName(String channelName) {
-		return flowChannelResolver.resolveChannelName(channelName);
+	@Override
+	public MessageChannel resolveDestination(String channelName) {
+		return flowChannelResolver.resolveDestination(channelName);
 	}
 
 	private void addReferencedProperties() {
@@ -266,7 +270,7 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 		for (PortConfiguration targetPortConfiguration : this.getFlowConfiguration().getPortConfigurations()) {
 			for (String outputPort : targetPortConfiguration.getOutputPortNames()) {
 				String targetOutputChannelName = (String) targetPortConfiguration.getOutputChannel(outputPort);
-				SubscribableChannel inputChannel = (SubscribableChannel) resolveChannelName(targetOutputChannelName);
+				SubscribableChannel inputChannel = (SubscribableChannel) resolveDestination(targetOutputChannelName);
 
 				((AbstractMessageChannel) inputChannel).addInterceptor(new FlowInterceptor(outputPort));
 
@@ -277,6 +281,7 @@ public class Flow implements InitializingBean, BeanNameAware, ChannelResolver, A
 		}
 	}
 
+	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.applicationContext = applicationContext;
 	}
