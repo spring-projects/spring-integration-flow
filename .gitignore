@@ -6,5 +6,4 @@ target
 /.idea
 /.gradle
 /build
-/gradle
 /*.iml
