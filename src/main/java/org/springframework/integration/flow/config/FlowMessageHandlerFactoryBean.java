@@ -31,7 +31,7 @@ import org.springframework.util.Assert;
  * @author David Turanski
  *
  */
-public class FlowMessageHandlerFactoryBean extends AbstractSimpleMessageHandlerFactoryBean
+public class FlowMessageHandlerFactoryBean extends AbstractSimpleMessageHandlerFactoryBean<FlowMessageHandler>
 		implements InitializingBean {
 
 	@SuppressWarnings("unused")
@@ -88,10 +88,6 @@ public class FlowMessageHandlerFactoryBean extends AbstractSimpleMessageHandlerF
 		this.timeout = timeout;
 	}
 
-	/**
-	 *
-	 * @param errorChannel
-	 */
 	public void setErrorChannel(MessageChannel errorChannel) {
 		this.errorChannel = errorChannel;
 	}

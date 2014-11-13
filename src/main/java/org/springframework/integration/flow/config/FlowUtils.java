@@ -1,11 +1,11 @@
 /*
  * Copyright 2002-2011 the original author or authors.
- * 
+ *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
@@ -33,21 +33,14 @@ import org.springframework.util.ResourceUtils;
 
 /**
  * Utility functions used by the flow parsers
- * 
+ *
  * @author David Turanski
- * 
+ *
  */
 public class FlowUtils {
 
 	private FlowUtils() {
 	}
-
-	/**
-	 * Create a bridge
-	 * 
-	 * @param inputChannel
-	 * @param outputChannel
-	 */
 
 	public static void bridgeChannels(SubscribableChannel inputChannel, MessageChannel outputChannel) {
 		BridgeHandler bridgeHandler = new BridgeHandler();
@@ -55,13 +48,6 @@ public class FlowUtils {
 		inputChannel.subscribe(bridgeHandler);
 	}
 
-	/**
-	 * Register a bean with "flow" prefix
-	 * 
-	 * @param beanDefinition
-	 * @param registry
-	 * @return
-	 */
 	public static String registerBeanDefinition(BeanDefinition beanDefinition, BeanDefinitionRegistry registry) {
 		String beanName = BeanDefinitionReaderUtils.generateBeanName(beanDefinition, registry);
 		beanName = "flow." + beanName;
@@ -116,20 +102,20 @@ public class FlowUtils {
 	}
 
 	private static void _displayDependencies(ConfigurableListableBeanFactory beanFactory, String[] beans, int level) {
-		for (int i = 0; i < beans.length; i++) {
+		for (String bean : beans) {
 
-			System.out.println(indent(level) + beans[i]);
+			System.out.println(indent(level) + bean);
 
-			String[] dependencies = beanFactory.getDependenciesForBean(beans[i]);
+			String[] dependencies = beanFactory.getDependenciesForBean(bean);
 			String[] depsArray = new String[dependencies.length];
 			int index = 0;
 			for (String dependency : dependencies) {
-				if (!dependency.equals(beans[i])) {
+				if (!dependency.equals(bean)) {
 
 					depsArray[index++] = dependency;
 				}
 				else {
-					System.out.println(indent(level + 1) + beans[i]);
+					System.out.println(indent(level + 1) + bean);
 				}
 			}
 			if (depsArray.length > 0) {
