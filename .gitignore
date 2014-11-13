@@ -3,3 +3,8 @@ target
 .springBeans
 .classpath
 .project
+/.idea
+/.gradle
+/build
+/gradle
+/*.iml
