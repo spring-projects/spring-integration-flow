@@ -46,7 +46,8 @@ import org.springframework.util.StringUtils;
  * @author David Turanski
  *
  */
-public class Flow implements InitializingBean, BeanNameAware, DestinationResolver, ApplicationContextAware {
+public class Flow
+		implements InitializingBean, BeanNameAware, DestinationResolver<MessageChannel>, ApplicationContextAware {
 
 	private static Log logger = LogFactory.getLog(Flow.class);
 
@@ -216,7 +217,7 @@ public class Flow implements InitializingBean, BeanNameAware, DestinationResolve
 	/**
 	 * All flow outputs defined in the {@link PortConfiguration} are bridged to
 	 * a single PublishSubscribeChannel
-	 * @param the publish-subscribe channel
+	 * @param flowOutputChannel the publish-subscribe channel
 	 */
 	public void setFlowOutputChannel(SubscribableChannel flowOutputChannel) {
 		this.flowOutputChannel = flowOutputChannel;
