@@ -1,18 +1,22 @@
-description = 'Spring Integration Flow'
-
 buildscript {
 	repositories {
 		maven { url 'http://repo.spring.io/plugins-release' }
 	}
 	dependencies {
-		classpath 'io.spring.gradle:spring-io-plugin:0.0.4.RELEASE'
+		classpath 'io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE'
+		classpath 'io.spring.gradle:spring-io-plugin:0.0.6.RELEASE'
 	}
 }
 
-apply plugin: 'java'
-apply from: "${rootProject.projectDir}/publish-maven.gradle"
-apply plugin: 'eclipse'
-apply plugin: 'idea'
+plugins {
+	id 'java'
+	id 'eclipse'
+	id 'idea'
+	id 'jacoco'
+	id 'org.sonarqube' version '2.1'
+}
+
+description = 'Spring Integration Flow'
 
 if (project.hasProperty('platformVersion')) {
 	apply plugin: 'spring-io'
@@ -33,17 +37,19 @@ if (project.hasProperty('platformVersion')) {
 group = 'org.springframework.integration'
 
 repositories {
-	maven { url 'http://repo.spring.io/libs-milestone' }
+	maven { url 'http://repo.spring.io/libs-snapshot' }
 }
 
-sourceCompatibility = 1.6
-targetCompatibility = 1.6
+compileJava {
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+}
 
 ext {
 
 	commonsLangVersion = '2.6'
-	jacocoVersion = '0.7.1.201405082137'
-	springIntegrationVersion = '4.0.5.RELEASE'
+	log4jVersion = '2.7'
+	springIntegrationVersion = '5.0.0.BUILD-SNAPSHOT'
 
 	linkHomepage = 'https://github.com/spring-projects/spring-integration-extensions'
 	linkCi = 'https://build.spring.io/browse/INTEXT'
@@ -68,8 +74,8 @@ dependencies {
 	testCompile "org.springframework.integration:spring-integration-test:$springIntegrationVersion"
 	testCompile "org.springframework.integration:spring-integration-groovy:$springIntegrationVersion"
 	testCompile "org.springframework.integration:spring-integration-jmx:$springIntegrationVersion"
-
-	jacoco "org.jacoco:org.jacoco.agent:$jacocoVersion:runtime"
+	testCompile "org.apache.logging.log4j:log4j-core:$log4jVersion"
+	testRuntime "org.apache.logging.log4j:log4j-jcl:$log4jVersion"
 }
 
 
@@ -77,6 +83,10 @@ eclipse {
 	project {
 		natures += 'org.springframework.ide.eclipse.core.springnature'
 	}
+}
+
+jacoco {
+	toolVersion = "0.7.7.201606060606"
 }
 
 sourceSets {
@@ -93,8 +103,21 @@ sourceSets {
 test {
 	// suppress all console output during testing unless running `gradle -i`
 	logging.captureStandardOutput(LogLevel.INFO)
-	jvmArgs "-javaagent:${configurations.jacoco.asPath}=destfile=${buildDir}/jacoco.exec,includes=*"
+	jacoco {
+		append = false
+		destinationFile = file("$buildDir/jacoco.exec")
+	}
 }
+
+jacocoTestReport {
+	reports {
+		xml.enabled false
+		csv.enabled false
+		html.destination "${buildDir}/reports/jacoco/html"
+	}
+}
+
+build.dependsOn jacocoTestReport
 
 task sourcesJar(type: Jar) {
 	classifier = 'sources'
@@ -111,10 +134,8 @@ artifacts {
 	archives javadocJar
 }
 
-apply plugin: 'sonar-runner'
-
-sonarRunner {
-	sonarProperties {
+sonarqube {
+	properties {
 		property "sonar.jacoco.reportPath", "${buildDir.name}/jacoco.exec"
 		property "sonar.links.homepage", linkHomepage
 		property "sonar.links.ci", linkCi
@@ -232,12 +253,6 @@ artifacts {
 task dist(dependsOn: assemble) {
 	group = 'Distribution'
 	description = 'Builds -dist, -docs and -schema distribution archives.'
-}
-
-task wrapper(type: Wrapper) {
-	description = 'Generates gradlew[.bat] scripts'
-	gradleVersion = '1.12'
-	distributionUrl = "http://services.gradle.org/distributions/gradle-${gradleVersion}-all.zip"
 }
 
 defaultTasks 'build'
