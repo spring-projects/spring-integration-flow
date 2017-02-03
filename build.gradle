@@ -17,6 +17,8 @@ plugins {
 	id 'org.sonarqube' version '2.1'
 }
 
+apply from: "${rootProject.projectDir}/publish-maven.gradle"
+
 description = 'Spring Integration Flow'
 
 
