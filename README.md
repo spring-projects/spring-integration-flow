@@ -3,7 +3,7 @@ Spring Integration Flow
 
 *NOTE: If you want to get right to the code, see the unit tests and check out (literally :) the [spring-integration-flow-samples](http:github.com/dturanski/spring-integration-flow-samples) project*
 
-#Goals
+# Goals
 Spring Integration components already support common enterprise integration patterns. Sometimes it is desirable to 
 create common message flows which implement higher level messaging patterns or "cross cutting concerns" for your 
 application environment. This is especially true in more complex applications.
