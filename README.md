@@ -109,7 +109,7 @@ Sometimes you may want to reference external bean definitions that must be defin
 
  
 # Implementing a Flow
-The flow element is used to locate the flow's spring bean definition file(s) by convention (classpath:META-INF/spring/flows/[flow-id]/*.xml). It's bean definition 
+The flow element is used to locate the flow's spring bean definition file(s) by convention (classpath:META-INF/spring/integration/flows/[flow-id]/*.xml). It's bean definition 
 files and any referenced-bean-locations will be used to create a child application context. The flow context must provide a FlowConfiguration bean which defines the 
 flows input and output ports and maps them to internal input and output channels.
 
@@ -137,7 +137,7 @@ If the flow defines multiple inputs, then multiple port-mapping elements must be
 
 Flow Description File
 ----------------------
-The user-friendly flow implementer may also create a text file classpath:META-INF/spring/flows/[flow-id]/flow.doc which describes the flow. Its contents will be written to 
+The user-friendly flow implementer may also create a text file classpath:META-INF/spring/integration/flows/[flow-id]/flow.doc which describes the flow. Its contents will be written to 
 STDOUT if the 'help' attribute on the client's flow declaration is set to true. 
 
 FlowMessageHandler Internals
