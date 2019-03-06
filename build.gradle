@@ -49,7 +49,7 @@ if (project.hasProperty('platformVersion')) {
 group = 'org.springframework.integration'
 
 repositories {
-	maven { url 'http://repo.spring.io/libs-snapshot' }
+	maven { url 'https://repo.spring.io/libs-snapshot' }
 }
 
 compileJava {
@@ -73,8 +73,8 @@ ext {
 	shortName = 'flow'
 }
 
-// See http://www.gradle.org/docs/current/userguide/dependency_management.html#sub:configurations
-// and http://www.gradle.org/docs/current/dsl/org.gradle.api.artifacts.ConfigurationContainer.html
+// See https://www.gradle.org/docs/current/userguide/dependency_management.html#sub:configurations
+// and https://www.gradle.org/docs/current/dsl/org.gradle.api.artifacts.ConfigurationContainer.html
 configurations {
 	jacoco //Configuration Group used by Sonar to provide Code Coverage using JaCoCo
 }
