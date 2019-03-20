@@ -5,11 +5,11 @@
 	xmlns:int="http://www.springframework.org/schema/integration"
 	xmlns:int-flow="http://www.springframework.org/schema/integration/flow"
 	xmlns:int-script="http://www.springframework.org/schema/integration/scripting"
-	xsi:schemaLocation="http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration.xsd
-		http://www.springframework.org/schema/integration/flow http://www.springframework.org/schema/integration/flow/spring-integration-flow.xsd
-		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/integration/scripting http://www.springframework.org/schema/integration/scripting/spring-integration-scripting.xsd
-		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/integration https://www.springframework.org/schema/integration/spring-integration.xsd
+		http://www.springframework.org/schema/integration/flow https://www.springframework.org/schema/integration/flow/spring-integration-flow.xsd
+		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/integration/scripting https://www.springframework.org/schema/integration/scripting/spring-integration-scripting.xsd
+		http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd">
 	
 	<int-flow:flow-configuration>
 		<int-flow:port-mapping input-channel="inputChannel" output-channel="outputChannel"/>
