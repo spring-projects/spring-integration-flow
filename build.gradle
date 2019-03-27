@@ -61,7 +61,7 @@ ext {
 
 	commonsLangVersion = '2.6'
 	log4jVersion = '2.7'
-	springIntegrationVersion = '5.0.0.BUILD-SNAPSHOT'
+	springIntegrationVersion = '5.0.13.BUILD-SNAPSHOT'
 
 	linkHomepage = 'https://github.com/spring-projects/spring-integration-extensions'
 	linkCi = 'https://build.spring.io/browse/INTEXT'
